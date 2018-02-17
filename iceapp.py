@@ -1,12 +1,15 @@
 from flask import Flask, g
-from boards import Boards
+from ice import Ice
+from flask_cors import CORS
 
 app = Flask(__name__)
-boards = Boards(app)
+CORS(app)
+boards = Ice(app)
 boards.set_configs('configs.py')
 
 # import all database models
-from board.model import Board, Message, User
+from profile.model import User
+from session.model import Session, SessionSet
 
 boards.initialize_extensions()
 

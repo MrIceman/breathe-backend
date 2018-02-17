@@ -60,15 +60,3 @@ class Message(db.Model):
         from flask import jsonify
         return jsonify(self.to_dict())
 
-
-class User(db.Model):
-    __tablename__ = 'user'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    account_name = db.Column(db.Text)
-    display_name = db.Column(db.Text)
-    password = db.Column(db.Text)
-
-    def __init__(self, account_name, display_name, password):
-        self.account_name = account_name,
-        self.display_name = display_name
-        self.password = password

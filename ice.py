@@ -3,7 +3,7 @@ from flask import g
 from extensions import set_up_database_manager, set_up_crypt_tool
 
 
-class Boards:
+class Ice:
 
     def __init__(self, app):
         self.app = app

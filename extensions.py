@@ -2,7 +2,7 @@ from database.DatabaseManager import DatabaseManager
 from util.security.Crypt import Crypt
 
 database_manager = DatabaseManager()
-crypto = Crypt('')
+crypto = Crypt()
 
 
 def set_up_database_manager(app):
