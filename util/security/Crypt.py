@@ -3,6 +3,9 @@ import jwt
 
 
 class Crypt:
+    """
+    Class hashes input via FERNET or JWT.
+    """
 
     def set_key(self, key):
         self.f = Fernet(key)
