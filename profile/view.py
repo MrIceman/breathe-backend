@@ -1,35 +1,43 @@
-from flask import request
-
-from . import board_blueprint as blueprint
-from .controller import get_board_by_city, set_board_by_city, insert_message
-from Exceptions import make_error_response
+from flask import request, stream_with_context, Response
+from .controller import create_user, sign_in, decrypt_auth_token
+from . import profile_blueprint
 
 
-@blueprint.route('/get/city=<string:city>', methods=['GET', 'POST'])
-def get_by_city(city):
-    with_messages = False
-    if 'with_messages' in request.args:
-        with_messages = True
+@profile_blueprint.route('/register', methods=['POST', 'GET'])
+def request_sign_up():
+    data = {}
+    for key, value in request.args.items():
+        data[key] = str(value)
 
-    try:
-        return get_board_by_city(city, json=True, with_messages=with_messages)
-    except Exception as e:
-        print(e)
-        return make_error_response(message='Error with loading {}'.format(city))
-
-
-@blueprint.route('/set/city=<string:city>', methods=['GET', 'POST'])
-def set_by_city(city):
-    result = set_board_by_city(city, json=True)
-
+    print('Received data: {}'.format(data))
+    result = create_user(**data)
     return result
 
 
-@blueprint.route('/<string:board_location>/message/set/', methods=['GET'])
-def set_message(board_location):
-    try:
-        result = insert_message(board_location, 'doom dee daa')
-        return result
-    except Exception as e:
-        print('Exception {}'.format(e))
-        return make_error_response(message='Error with creating a message at {}'.format(board_location))
+@profile_blueprint.route('/test', methods=['GET'])
+def test_():
+    token = request.args['auth']
+    return '{}'.format(decrypt_auth_token(token))
+
+
+@profile_blueprint.route('/sign_in', methods=['GET'])
+def request_sign_in():
+    """
+    {
+  "age": 0,
+  "bio": "default",
+  "country": "",
+  "display_name": "now",
+  "email": "mrtnnwsd@gmail.com",
+  "id": 12,
+  "location": "false",
+  "password": "1"
+
+  JWT:
+  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im1ydG5ud3NkQGdtYWlsLmNvbSJ9.BxuYPD1Vpx2h3xC3k7E57slNmMob2HxiLwofv5jWXvw
+}
+    :return:
+    """
+    email = request.args['email']
+    password = request.args['password']
+    return sign_in(email, password)

@@ -22,11 +22,11 @@ class Session(db.Model):
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     notes = db.Column(db.Text, default='')
     total_time = db.Column(db.Integer, default='')
-    sessions = db.relationship('session_set', backref='session', lazy='dynamic')
-    user = db.Column(db.Integer, db.ForeignKey('user.id', name='user'))
+    sessions = db.relationship('SessionSet', backref='session', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, **kwargs):
-        for key, value in kwargs:
+        for key, value in kwargs.items():
             try:
                 if self.__getattribute__(key) is not None:
                     self.__setattr__(key, value)

@@ -14,9 +14,10 @@ from session.model import Session, SessionSet
 boards.initialize_extensions()
 
 # import all blueprints
-from board import board_blueprint as board_bp
+from profile import profile_blueprint as profile_bp
+from session import session_blueprint as session_bp
 
-boards.initialize_blueprints(board_bp)
+boards.initialize_blueprints(profile_bp, session_bp)
 
 
 @app.route('/')
@@ -26,3 +27,5 @@ def hello_world():
 
 if __name__ == '__main__':
     app.run()
+
+
