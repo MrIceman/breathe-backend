@@ -1,5 +1,7 @@
 from cryptography.fernet import Fernet
 import jwt
+from flask import jsonify
+
 from util.error.ErrorMessages import make_error_message
 from util.error.ErrorCodes import AUTH_TOKEN_INVALID
 
@@ -17,10 +19,10 @@ class Crypt:
         return self.f.encrypt(bytes(hidden_msg, 'UTF-8'))
 
     def decrypt(self, token):
-        return self.f.decrypt(token).decode('utf-8')
+        return self.f.decrypt(token).decode('UTF-8')
 
     def get_auth_token(self, id):
-        payload = {'id': id}
+        payload = {'userid': id}
         token = jwt.encode(payload=payload, key=self.secret)
         return token
 

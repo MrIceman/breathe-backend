@@ -3,7 +3,7 @@ from flask import jsonify
 
 
 def _get_json_msg(text):
-    return {'Error': text}
+    return jsonify({'Error': text})
 
 
 def make_error_message(code):

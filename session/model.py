@@ -28,7 +28,7 @@ class Session(db.Model):
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
             try:
-                if self.__getattribute__(key) is not None:
+                if key is not 'sessions':
                     self.__setattr__(key, value)
             except AttributeError:
                 print('{} is an unknown Attribute'.format(key))

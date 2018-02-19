@@ -38,20 +38,21 @@ def validate_sign_in(email, password):
         user = db.session.query(User).filter(User.email.is_(email)).first()
     if user is None:
         return {'error': 'No account for {}'.format(email)}
-    if crypto.decrypt(user.password) is not password:
+    if crypto.decrypt(user.password) != password:
         return {'error': 'Wrong password for {}'.format(email)}
-    return {'status': SIGN_IN_OK, 'data': user.id}
+    return {'status': SIGN_IN_OK, 'id': user.id}
 
 
 def sign_in(email, password):
     status_check = validate_sign_in(email, password)
     if SIGN_IN_OK not in status_check.values():
-        return status_check
-    return jsonify(crypto.get_auth_token(id=status_check['data']))
+        return jsonify(status_check)
+    token = crypto.get_auth_token(id=status_check['id'])
+    return jsonify({'token': str(token, 'UTF-8')})
 
 
 def decrypt_auth_token(token):
-    return {'Payload': crypto.decrypt_auth_token(token)}
+    return crypto.decrypt_auth_token(token)
 
 
 def update_user(**kwargs):
