@@ -20,5 +20,4 @@ class Ice:
 
     def initialize_blueprints(self, *args):
         for bp in args:
-            print('Intializing {}'.format(str(bp)))
             self.app.register_blueprint(bp)

@@ -37,17 +37,17 @@ def validate_sign_in(email, password):
     with database_manager.get_db(commit=False) as db:
         user = db.session.query(User).filter(User.email.is_(email)).first()
     if user is None:
-        return jsonify({'error': 'No account for {}'.format(email)})
+        return {'error': 'No account for {}'.format(email)}
     if crypto.decrypt(user.password) is not password:
-        return jsonify({'error': 'Wrong password for {}'.format(email)})
-    return SIGN_IN_OK
+        return {'error': 'Wrong password for {}'.format(email)}
+    return {'status': SIGN_IN_OK, 'data': user.id}
 
 
 def sign_in(email, password):
     status_check = validate_sign_in(email, password)
-    if status_check is not SIGN_IN_OK:
+    if SIGN_IN_OK not in status_check.values():
         return status_check
-    return crypto.get_auth_token(email=email)
+    return jsonify(crypto.get_auth_token(id=status_check['data']))
 
 
 def decrypt_auth_token(token):

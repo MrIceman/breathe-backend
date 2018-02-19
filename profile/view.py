@@ -3,10 +3,10 @@ from .controller import create_user, sign_in, decrypt_auth_token
 from . import profile_blueprint
 
 
-@profile_blueprint.route('/register', methods=['POST', 'GET'])
+@profile_blueprint.route('/register', methods=['POST'])
 def request_sign_up():
     data = {}
-    for key, value in request.args.items():
+    for key, value in request.data.items():
         data[key] = str(value)
 
     print('Received data: {}'.format(data))
@@ -16,11 +16,11 @@ def request_sign_up():
 
 @profile_blueprint.route('/test', methods=['GET'])
 def test_():
-    token = request.args['auth']
+    token = request.headers['auth']
     return '{}'.format(decrypt_auth_token(token))
 
 
-@profile_blueprint.route('/sign_in', methods=['GET'])
+@profile_blueprint.route('/sign_in', methods=['POST'])
 def request_sign_in():
     """
     {
@@ -38,6 +38,7 @@ def request_sign_in():
 }
     :return:
     """
-    email = request.args['email']
-    password = request.args['password']
+    data = request.json
+    email = data['email']
+    password = data['password']
     return sign_in(email, password)

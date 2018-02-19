@@ -1,5 +1,7 @@
 from cryptography.fernet import Fernet
 import jwt
+from util.error.ErrorMessages import make_error_message
+from util.error.ErrorCodes import AUTH_TOKEN_INVALID
 
 
 class Crypt:
@@ -17,8 +19,8 @@ class Crypt:
     def decrypt(self, token):
         return self.f.decrypt(token).decode('utf-8')
 
-    def get_auth_token(self, email):
-        payload = {'email': email}
+    def get_auth_token(self, id):
+        payload = {'id': id}
         token = jwt.encode(payload=payload, key=self.secret)
         return token
 
@@ -26,4 +28,4 @@ class Crypt:
         try:
             return jwt.decode(jwt=token, key=self.secret)
         except Exception:
-            return 'Wrong Authentification!'
+            return make_error_message(AUTH_TOKEN_INVALID)
