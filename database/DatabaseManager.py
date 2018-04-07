@@ -20,4 +20,3 @@ class DatabaseManager:
             db.session.commit()
         elif 'flush' in kwargs:
             db.session.flush()
-        print('Added something. Done here')

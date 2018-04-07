@@ -1,4 +1,4 @@
-from flask import request, stream_with_context, Response, jsonify
+from flask import request, stream_with_context, Response, jsonify, json
 from .controller import create_user, sign_in, decrypt_auth_token
 from . import profile_blueprint
 
@@ -7,13 +7,10 @@ from . import profile_blueprint
 def request_sign_up():
     if request.json is None:
         return jsonify({'Error': 'only JSON params allowed'})
-    data = {}
-    for key, value in request.json.items():
-        data[key] = str(value)
-
-    print('Received data: {}'.format(data))
+    data = json.loads(request.json)
     result = create_user(**data)
-    return result
+    print(result)
+    return json.dumps(result)
 
 
 @profile_blueprint.route('/test', methods=['POST'])
@@ -39,7 +36,8 @@ def request_sign_in():
 }
     :return:
     """
-    data = request.get_json()
+    data = json.loads(request.json)
     email = data['email']
     password = data['password']
-    return sign_in(email, password)
+    result = json.dumps((sign_in(email, password)))
+    return result
