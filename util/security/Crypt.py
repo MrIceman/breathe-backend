@@ -21,7 +21,7 @@ class Crypt:
     def decrypt(self, token):
         return self.f.decrypt(token).decode('UTF-8')
 
-    def get_auth_token(self, id):
+    def encrypt_auth_token(self, id):
         payload = {'userid': id}
         token = jwt.encode(payload=payload, key=self.secret)
         return token

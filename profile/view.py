@@ -8,9 +8,9 @@ def request_sign_up():
     if request.json is None:
         return jsonify({'Error': 'only JSON params allowed'})
     data = json.loads(request.json)
-    result = create_user(**data)
+    result = json.dumps(create_user(**data))
     print(result)
-    return json.dumps(result)
+    return result
 
 
 @profile_blueprint.route('/test', methods=['POST'])
@@ -40,4 +40,5 @@ def request_sign_in():
     email = data['email']
     password = data['password']
     result = json.dumps((sign_in(email, password)))
+    print(result)
     return result
