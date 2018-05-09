@@ -8,7 +8,11 @@ crypto = Crypt()
 def set_up_database_manager(app):
     global database_manager
     database_manager.init_app(app)
+    if app is not None:
+        print('initialized a database manager')
+    else:
+        print('failed to init db manager')
 
 
-def set_up_crypt_tool(key):
-    crypto.set_key(key)
+def set_up_crypt(secret):
+    crypto.set_key(secret)

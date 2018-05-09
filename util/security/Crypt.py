@@ -1,9 +1,8 @@
-from cryptography.fernet import Fernet
 import jwt
-from flask import jsonify
+from cryptography.fernet import Fernet
 
-from util.error.ErrorMessages import make_error_message
 from util.error.ErrorCodes import AUTH_TOKEN_INVALID
+from util.error.ErrorMessages import make_error_message
 
 
 class Crypt:
