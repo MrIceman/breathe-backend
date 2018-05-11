@@ -1,7 +1,12 @@
-from flask import Blueprint, request, jsonify, ctx
+from flask import Blueprint, jsonify
+
+from extensions import database_manager
+from session.controller import SessionController
 from util.error import ErrorCodes, ErrorMessages
+from util.parsing.ArrayParser import ArrayParser
 
 session_blueprint = Blueprint('session', __name__, url_prefix='/session')
+controller = SessionController(database_manager=database_manager, array_parser=ArrayParser())
 
 
 @session_blueprint.before_request

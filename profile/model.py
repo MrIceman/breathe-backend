@@ -1,6 +1,7 @@
 from flask import jsonify
-from extensions import crypto
+
 from database.Database import db
+from extensions import crypto
 
 
 class User(db.Model):
@@ -29,14 +30,7 @@ class User(db.Model):
     def to_dict(self):
         password = crypto.decrypt(self.password)
         result = {
-            'id': self.id,
-            'email': self.email,
-            'password': password,
-            'display_name': self.display_name,
-            'country': self.country,
-            'location': self.location,
-            'age': self.age,
-            'bio': self.bio,
+
         }
 
         return result

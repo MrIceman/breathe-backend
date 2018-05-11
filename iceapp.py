@@ -8,10 +8,11 @@ iceapp = Ice(app)
 iceapp.set_configs('configs.py')
 # import all database models
 from profile.model import User
-from session.model import Session, SessionSet
+from session.model import Session, SessionRound
 
 iceapp.initialize_extensions()
 # import all blueprints
+print('initializing database')
 from profile import profile_blueprint as profile_bp
 from session import session_blueprint as session_bp
 

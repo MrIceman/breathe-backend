@@ -9,6 +9,7 @@ class ArrayParser:
     def __init__(self):
         pass
 
+    # parses a json array  [{"1": 40}, {"2": 50}] to 1:40 2:50 and vice versa if json=True is passed as argument
     def parse(self, data, **kwargs):
         to_json = kwargs.pop('json', False)
         if not to_json:

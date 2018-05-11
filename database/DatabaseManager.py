@@ -11,4 +11,5 @@ class DatabaseManager:
         return self.db
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.db.session.commit()
+        if self.commit:
+            self.db.session.commit()
