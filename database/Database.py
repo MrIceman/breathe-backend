@@ -1,6 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
 
 
@@ -16,4 +15,6 @@ def init_db(app):
 
 
 def get_db():
+    if db.get_app() is None:
+        raise Exception('No Database initialized')
     return db

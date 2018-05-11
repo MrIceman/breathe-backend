@@ -26,7 +26,7 @@ class ProfileController:
             if status_check is SIGN_UP_OK:
                 kwargs['password'] = self.crypto.encrypt(kwargs['password'])
                 user = User(**kwargs)
-                with self.database_manager.get_db(commit=True) as db:
+                with self.database_manager(commit=True) as db:
                     db.session.add(user)
                 token = self.crypto.encrypt_auth_token(id=user.id)
                 return {'token': str(token, 'UTF-8')}
@@ -39,7 +39,7 @@ class ProfileController:
 
     def validate_credentials(self, email, display_name):
         # checks if username already exists
-        with self.database_manager.get_db(commit=False) as db:
+        with self.database_manager(commit=False) as db:
             user = db.session.query(User).filter(User.display_name.is_(display_name)).first()
             if user is not None:
                 return DISPLAY_NAME_TAKEN
@@ -50,7 +50,7 @@ class ProfileController:
         return SIGN_UP_OK
 
     def validate_sign_in(self, email, password):
-        with self.database_manager.get_db(commit=False) as db:
+        with self.database_manager(commit=False) as db:
             user = db.session.query(User).filter(User.email.is_(email)).first()
         if user is None:
             return {'error': 'No account for {}'.format(email)}

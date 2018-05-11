@@ -1,4 +1,4 @@
-from extensions import set_up_database_manager, set_up_crypt
+from extensions import set_up_database, set_up_crypt
 
 
 class Ice:
@@ -12,7 +12,7 @@ class Ice:
 
     def initialize_extensions(self):
         with self.app.app_context():
-            set_up_database_manager(self.app)
+            set_up_database(self.app)
 
         set_up_crypt(self.app.config['CRYPT_KEY'])
 

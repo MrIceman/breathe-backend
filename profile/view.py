@@ -7,7 +7,8 @@ from . import profile_blueprint
 def request_sign_up():
     if request.json is None:
         return jsonify({'Error': 'only JSON params allowed'})
-    data = json.loads(request.json)
+    data = request.json
+    print('received data: {}'.format(data))
     result = json.dumps(controller.create_user(**data))
     print(result)
     return result

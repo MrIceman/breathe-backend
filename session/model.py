@@ -22,7 +22,8 @@ class Session(db.Model):
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     notes = db.Column(db.Text, default='')
     total_time = db.Column(db.Integer, default='')
-    breath_rounds = db.Column(db.JSON, default='')
+    breath_rounds = db.Column(db.Text, default='')
+    retention_rounds = db.Column(db.Text, default='')
     sessions = db.relationship('SessionSet', backref='session', lazy='dynamic')
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
