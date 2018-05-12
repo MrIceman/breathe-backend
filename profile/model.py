@@ -30,7 +30,7 @@ class User(db.Model):
     def to_dict(self):
         password = crypto.decrypt(self.password)
         result = {
-
+            'password': password
         }
 
         return result

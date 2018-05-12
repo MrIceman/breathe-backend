@@ -1,0 +1,28 @@
+email: admin
+password: admin
+display_name: admin
+
+token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyaWQiOjF9.NNwMLO3ksaQj41ax9hSuBOVVaB40ZSaJTACLY-k8Rxg
+
+## Authentication
+Request JSON:
+
+/profile/sign_in
+
+{"email": "admin", "password": "admin", "display_name": "admin"}
+
+## Create test session
+/session/create
+
+{"notes": "Custom Created ",
+"rounds": [
+{ "round_order": 1,
+ "breathes": 30,
+ "retention_time": 50
+ },
+ {
+ "round_order": 2,
+ "breathes": 20,
+ "retention_time": 60
+ }]
+ }

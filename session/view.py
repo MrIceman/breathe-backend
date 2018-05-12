@@ -1,7 +1,7 @@
 from flask import request
 
 from extensions import crypto
-from session.model import Session
+from . import controller
 from . import session_blueprint
 
 
@@ -14,11 +14,17 @@ def hello():
 
 @session_blueprint.route('/create', methods=['POST'])
 def _create_session():
-    payload = crypto.decrypt_auth_token(request.headers['auth'])
-    id = payload['userid']
+    payload = crypto.decrypt_auth_token(request.headers['Authorization'])
+    user_id = payload['userid']
     json = request.get_json()
+    json.update(user_id=user_id)
+    session = controller.create_session(**json)
+    return session
 
-    session = Session(**json)
-    if session:
-        return session.to_json()
-    return 'Error'
+
+@session_blueprint.route('/search', methods=['GET'])
+def get_by_user():
+    payload = crypto.decrypt_auth_token(request.headers['Authorization'])
+    userid = payload['userid']
+    result = controller.get_sessions_by_user_id(userid)
+    return result

@@ -13,7 +13,7 @@ def request_sign_up():
         return jsonify({'Error': 'only JSON params allowed'})
     data = request.json
     print('received data: {}'.format(data))
-    result = json.loads(controller.create_user(**data))
+    result = json.dumps(controller.create_user(**data))
     print(result)
     return result
 
