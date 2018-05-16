@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 
 from extensions import crypto
 from . import controller
@@ -17,9 +17,10 @@ def _create_session():
     payload = crypto.decrypt_auth_token(request.headers['Authorization'])
     user_id = payload['userid']
     json = request.get_json()
+    print('Received json: {}'.format(json))
     json.update(user_id=user_id)
     session = controller.create_session(**json)
-    return session
+    return jsonify(session)
 
 
 @session_blueprint.route('/search', methods=['GET'])

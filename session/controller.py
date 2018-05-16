@@ -8,7 +8,6 @@ class SessionController:
 
     def __init__(self, **kwargs):
         self.database_manager = kwargs['database_manager']
-        self.array_parser = kwargs['array_parser']
 
     """
     constructor(public readonly id: number = Date.now(),
@@ -31,8 +30,7 @@ class SessionController:
             db.session.flush()
             for session_round in kwargs['rounds']:
                 data = dict(session_round)
-                data.update(session_id=session.id)
-                print('Creating Session Round with Session {}'.format(data))
+                data.update(session_uuid=session.uuid)
                 s_set = SessionRound(**data)
                 db.session.add(s_set)
 

@@ -11,7 +11,7 @@ from . import profile_blueprint
 def request_sign_up():
     if request.json is None:
         return jsonify({'Error': 'only JSON params allowed'})
-    data = request.json
+    data = json.loads(request.json)
     print('received data: {}'.format(data))
     result = json.dumps(controller.create_user(**data))
     print(result)
@@ -26,22 +26,8 @@ def test_():
 
 @profile_blueprint.route('/sign_in', methods=['POST'])
 def request_sign_in():
-    """
-  "age": 0,
-  "bio": "default",
-  "country": "",
-  "display_name": "marty",
-  "email": "email@mine.com",
-  "id": 13,
-  "location": "false",
-  "password": "123"
-
-  JWT:
-  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyaWQiOiJlbWFpbEBtaW5lLmNvbSJ9.L5K_hswkVXpuoV9fPpLjVO-ILzFdytdCJgBnPbhLvVE
-}
-    :return:
-    """
-    data = request.json
+    print('Received Request: {}'.format(request.headers))
+    data = json.loads(request.json)
     print('Received {}'.format(data))
     email = data['email']
     password = data['password']
