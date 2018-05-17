@@ -36,12 +36,12 @@ class SessionController:
 
         return session.to_json()
 
-    def get_sessions_by_user_id(self, userid):
+    def get_sessions_by_user_id(self, user_id):
         with self.database_manager(commit=False) as db:
-            user = db.session.query(User).filter(User.id.is_(userid)).first()
+            user = db.session.query(User).filter(User.id.is_(user_id)).first()
             if user is None:
-                return jsonify({'Error': 'User with ID {} could not be found'.format(userid)})
-            session = db.session.query(Session).filter(Session.user_id.is_(userid)).all()
+                return jsonify({'Error': 'User with ID {} could not be found'.format(user_id)})
+            session = db.session.query(Session).filter(Session.user_id.is_(user_id)).all()
             result = [sess.to_dict() for sess in session]
             print('Result list: {}'.format(result))
         return json.dumps(result)
